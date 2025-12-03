@@ -1,0 +1,33 @@
+---
+sidebar_position: 4
+---
+
+# Doubts
+
+1. When exactly does execution context's creation phase happen for both global and function execution contexts? During compilation?
+
+2. Global lexical environment vs global scope (window). 
+	- When is each of them created, why are they used? 
+	- How important are they both in modern module based JS? 
+	- Why global scope in dev tools is same as window and why it contains a window key in itself?
+
+3. Script and module scopes (see test.html example). 
+	- If there are 2 scripts in single html file, which variables will be shared between them and which will not? (also explore this when both normal and module type script present)
+	- Does script scope actually exist or is it just a way to show scope handling by dev tools (https://stackoverflow.com/questions/40685277/what-is-the-purpose-of-the-script-scope)
+	- Does module scope actually exist? 
+	- Are they also visible in a simple react application? 
+
+4. Check and document which all scopes are created in below scenarious:
+   - Vanills JS (chrome snippets)
+   - JS script in html
+   - JS script with type="module" in html
+   - Simple react app
+   - MMT cabs react app
+
+5. Parts of lexical enviroment in detail
+	 - Environment record (declarative vs object environment record)
+	 - Reference to the outer environment
+
+6. How **this** is different in module vs regular script?
+
+<br />

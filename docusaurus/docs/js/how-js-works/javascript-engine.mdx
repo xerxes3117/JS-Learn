@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+---
+
+# Javascript Engine
+
+<br/>
+
+<div style={{ color: 'red' }}>Add diagram for all parts of a JS engine</div>
+
+#### What happens at build time?
+<div style={{ color: 'red' }}>??</div>
+
+#### What happens at complile time?
+<div style={{ color: 'red' }}>??</div>
+
+#### What happens at runtime?
+<details>
+<summary>Steps:</summary>
+
+- Lexical analysis (Tokenisation of JS code)
+- Parsing
+  - Conversion to AST
+  - Hoisting is done here too (why?)
+  - what is AST exactly
+  - https://astexplorer.net/ 
+
+- Compilation
+  - What is the role of a compiler?
+  - JIT compilation (how is it different from other languages)
+  - JIT in java vs JS
+  - Converts AST to bytecode (how, where?)
+
+- Execution context (Variable environment + Code)
+  - Memory allocation
+    - Hoisting 
+    - Scope creation/resolution
+    - Why hoisting is necessary? 
+    - Why do we need to completely store functions during hoisting which wastes space
+    - not defined vs undefined vs null (undefined is allocated memory whereas not defined is not allocated any memory)
+  - Code execution
+    - Thread and call stack management
+      - Initially global execution context is created and with each function call new execution context is created. All these contexts are managed in call stack
+      - return returns the control of program to parent execution context (from where the current execution context was invoked). Also, after return the current execution context is deleted and removed from call stack
+    - For async tasks, Event loop + callback queue is used 
+- Garbage collection
+  - Mark and sweep algorithm
+</details>
+
+### Doubts
+- <span style={{ color: "red" }}>Different types of compilations in javascript: Initial compile (parsing and hoisting), vs JIT compile (optimization and execution) vs Transpilation (babel, typescript). When exactly each of these compilations happen?</span>
+- <span style={{ color: "red" }}>Javascript interpreter vs compiler</span>
+- <span style={{ color: "red" }}>What exactly is window object and where is it stored?</span>

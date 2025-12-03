@@ -1,0 +1,20 @@
+<html>
+
+<body>
+    <button id="bId">A button</button>
+
+</body>
+<script>
+    (function () {
+        'use strict';
+        console.log(document)
+        document.getElementById('bId').addEventListener("click", function () {
+            console.log('clicked');
+        })
+        console.log('before');
+        document.getElementById('bId').click();
+        console.log('after')
+    }());
+</script>
+
+</html>

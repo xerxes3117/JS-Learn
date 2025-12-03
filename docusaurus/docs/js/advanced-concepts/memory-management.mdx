@@ -1,0 +1,95 @@
+---
+sidebar_position: 1
+---
+
+# Memory management
+
+
+<br />
+### Different types of memory used in JavaScript
+
+| Memory Type	| Stores	| Location |
+|----------------|----------------|----------------|
+| Call Stack	| Function calls, local variables, primitive values	| RAM (Stack Section) |
+| Heap	| Objects, arrays, closures, global variables	| RAM (Heap Section) |
+| Code Segment	| JavaScript source code	| RAM (Code Section) |
+| Registers	| Temporary values used in calculations	| CPU Registers |
+| Memory Mapped I/O	| Browser events, Web API calls	| System Memory |
+| Garbage Collection	| Unused objects waiting for cleanup	| Heap (GC Controlled) |
+<br />
+
+JavaScript uses different types of memory to manage data and variables. The two main types of memory are: 
+1. **Stack Memory**: This is used for static memory allocation, where the size of the data is
+known at compile time. It stores primitive data types (like numbers, strings, and
+booleans) and references to objects. 
+2. **Heap Memory**: This is used for dynamic memory allocation, where the size of the data can change at runtime. It stores objects and arrays.
+
+Other types of memory include:
+1. **Memory-mapped I/O**: This is used for interacting with hardware devices or APIs. It allows the program to read and write data to specific memory addresses that are mapped to hardware devices.
+2. **Registers**: These are small, fast storage locations within the CPU that hold data temporarily during processing. They are used for quick access to frequently used values and instructions.
+3. **Code segment**: This is the area of memory where the compiled code of a program is stored. It contains the instructions that the CPU executes.
+4. **Garbage collection**: This is a process that automatically frees up memory that is no longer in use. It helps to prevent memory leaks and optimize memory usage.
+
+
+<br />
+Primitives and Reference types
+```javascript
+let globalVar = "I am global"; // Stored in heap
+
+function exampleFunction() {
+  let localVar = "I am local"; // Stored in the call stack
+  const constantVar = "I am constant"; // Stored in the call stack
+
+  let obj = { prop: 12 }; // Stored in heap
+  let arr = [1, 2, 3, 4]; // Stored in heap
+}
+
+exampleFunction();
+```
+
+<br />
+Closures
+```javascript
+
+  function closureExample() {
+    return obj.prop; // Stored in the heap (closure)
+  }
+
+  closureExample();
+```
+
+<br />
+Memory-mapped I/O
+```javascript
+  document.getElementById("myButton").addEventListener("click", () => {
+    // Memory-mapped I/O event
+    console.log("Button clicked!");
+  });
+
+  // Memory-mapped I/O: API call, interacts with the browser or network layer
+  fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+	}
+
+exampleFunction();
+```
+
+<br />
+### Garbage Collection
+
+
+<br />
+### Doubts
+1. Why heap is used for persistent memory while stack is used for temporary ones?
+2. Why heap memory is used for objects and arrays while stack memory is used for primitive data types?
+3. Why is stack memory faster than heap memory?
+4. Why is stack memory limited while heap memory is not?
+5. how scope and lexical environment relate to above memory allocations and destructions?
+
+
+<br />
+### References
+
+<br />
+### Notes

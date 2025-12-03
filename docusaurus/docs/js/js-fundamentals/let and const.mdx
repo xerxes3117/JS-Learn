@@ -1,0 +1,71 @@
+---
+sidebar_position: 1
+---
+
+# let and const
+
+import notes1 from "@site/static/img/let_const_notes1.jpg";
+import notes2 from "@site/static/img/let_const_notes2.jpg";
+import notes3 from "@site/static/img/let_const_notes3.jpg";
+import notes4 from "@site/static/img/let_const_notes4.jpg";
+
+import blockScope from "@site/static/img/block_script_scopes_1.png";
+
+<br />
+### How let and const work
+
+**let** and **const** are stored in a seprate memory space than **var**.
+
+```javascript showLineNumbers
+let a = 1;
+const b = 2;
+var c = 3;
+
+{
+  let a = 4;
+  const b = 5;
+  var c = 6;
+  console.log(a); // 4
+  console.log(b); // 5
+  console.log(c); // 6
+}
+
+console.log(a); // 1
+console.log(b); // 2
+console.log(c); // 6
+```
+
+If you run the above code, you will see the following in dev tools:
+
+There are 2 copies of **a** and **b** (in block and script scopes), but only one copy of **c** (in global scope). This is why **a** and **b** are not affected by the changes made in the block scope, but **c** is changed to **6**.
+
+<img
+  src={blockScope}
+  alt="Scope"
+  width="700"
+  style={{ border: "0.2px solid grey" }}
+/>
+
+<br />
+<br />
+
+:::warning
+Even though **let** and **var** are stored in a separate memory space (let is stored in "script" scope i.e. DER while var is stored in global scope i.e. OER), you can't redeclare a **let** variable in the same scope using **var**:
+```javascript
+let a = 1;
+var a = 2; // SyntaxError: Identifier 'a' has already been declared
+```
+:::
+
+<br />
+### Doubts
+
+<br />
+### References
+
+<br />
+### Notes
+<img src={notes1} alt="Scope" width="700" />
+<img src={notes2} alt="Scope" width="700" />
+<img src={notes3} alt="Scope" width="700" />
+<img src={notes4} alt="Scope" width="700" />

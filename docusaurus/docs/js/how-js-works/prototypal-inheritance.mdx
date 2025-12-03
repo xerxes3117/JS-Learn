@@ -1,0 +1,88 @@
+---
+sidebar_position: 4
+---
+
+# Prototypal Inheritance
+
+<br />
+### What is prototypal inheritance?
+
+#### `prototype`
+
+- Every function in JavaScript has a property called `prototype`. When you create a new object using that function as a constructor (i.e. using `new` keyword), the new object inherits properties and methods from the constructor's prototype.
+
+- `prototype` is responsible for creating the prototype chain by defining `__proto__` for the object created by the constructor function.
+
+- You don't have to necessarily use the `new` keywords in some cases. Here is table of equivalent ways to create an object, arrays, strings, etc.:
+
+| Type     | Constructor      | Literal          |
+| -------- | ---------------- | ---------------- |
+| Object   | `new Object()`   | `{}`             |
+| Array    | `new Array()`    | `[]`             |
+| String   | `new String()`   | `''`             |
+| Number   | `new Number()`   | `0`              |
+| Boolean  | `new Boolean()`  | `false`          |
+| Function | `new Function()` | `function () {}` |
+| Date     | `new Date()`     | `new Date()`     |
+
+- The `prototype` property is an object itself, and it can have its own properties and methods. When you create a new object using a constructor function, the new object has access to the properties and methods defined on the constructor's prototype.
+
+- ES6 class syntax is a syntactical sugar over the existing prototype-based inheritance. It allows you to create classes and define methods on the class's prototype
+
+```js
+// Using ES6 class syntax
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+const person1 = new Person("Alice");
+person1.greet();
+
+// Using constructor function
+function Person(name) {
+  this.name = name;
+}
+Person.prototype.greet = function () {
+  console.log(`Hello, my name is ${this.name}`);
+};
+const person1 = new Person("Alice");
+person1.greet();
+```
+
+#### `__proto__`
+
+The `__proto__` property is a reference to the prototype of an object. When accessing a property on an object, it is this `__proto__` (and not the `prototype` property of the constructor function) that is used to look up the prototype chain.
+
+<br />
+### Doubts/To cover
+- Check in https://javascript.info/prototypes
+	- highlighted texts
+	- summary of each article
+- Difference between `[[Prototype]]` and `__proto__`?
+- Prototype can only be an object or null. Why not a function? What happens when you set a function as prototype? What happens when you set a primitive type as prototype? Does it throw an error or does it get converted to an object? Or is it totally ignored?
+- What exactly inheriting a property means? How to check if a property is inherited or not? 
+- Enumerable, writable, configurable properties of an object. How to check if a property is enumerable or not? How to make a property non-enumerable?
+- What all happens when you create an object using `new` keyword? `Object.create` vs `new` keyword
+- What `delete obj.prop` does? Does it delete the property from the prototype chain or just the object?
+- How using `prototype` instead of defining methods inside the `constructor` function is more memory efficient? Take example of both native and user defined prototypes
+- Even though they are not objects, Primitive types are also able to access methods like `toUpperCase`, `toString`, etc. How is that possible? What happens when you call a method on a primitive type? Does it create a wrapper object? Is this wrapper object temporary or permanent?
+- Why modifying a native prototype is considered a bad idea except in case of polyfills. polyfills vs monkey patching.
+- Unlike languages like C++, javascript only allows single inheritance. How to achieve multiple inheritance in javascript? What are the drawbacks of multiple inheritance? Why is it not supported in javascript?
+- **What are accessor properties? What is advantage of using them? What is the difference between accessor properties and data properties? Why `__proto__` is an accessor property?**
+- **What is use of getter/setter inherited from `Object.prototype`? When are these called? How to use them?** 
+- **What is the use of `Object.getOwnPropertyDescriptor`?**
+- **What does this mean: "__proto__ is not a property of the object itself, but an accessor property (getter/setter) inherited from Object.prototype." (see https://javascript.info/prototype-methods#very-plain)**
+- `Object.create(null)` How this object will be different from a normal object? What is the use case of this object? How to create an object with null prototype? What are the drawbacks of this object? (see https://javascript.info/prototype-methods#very-plain)
+
+
+
+<br />
+### References
+
+<br />
+### Notes

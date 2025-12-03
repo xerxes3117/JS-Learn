@@ -1,0 +1,50 @@
+---
+sidebar_position: 1
+---
+
+# Immutability
+
+### What is meant by immutability?
+???
+
+### Memory allocation in primitives vs reference types
+#### Primitive types
+```javascript
+let a = 10;
+var b = a;
+b = 20;
+console.log(a); // 10 
+console.log(b); // 20
+```
+
+#### Reference types
+```javascript
+let obj = {
+  name: 'John',
+  age: 20
+};
+
+let obj2 = obj;
+
+obj2.age = 30;
+
+console.log(obj.age); // 30
+console.log(obj2.age); // 30
+```
+
+
+<br />
+
+
+<br />
+### Doubts/Topics to cover
+- What is meant by immutability?
+- How memory allocation works for primitives vs reference types and how it affects immutability (explain with examples)
+- Are strings immutable data type?
+- How to make a reference type immutable?
+- Immutability in React & Redux
+
+
+### References
+
+### Notes

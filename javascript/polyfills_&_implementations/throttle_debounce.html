@@ -1,0 +1,71 @@
+<!-- LEVEL: MEDIUM (HARD if doing for first time) -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+    <style>
+      input {
+        display: block;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+
+  <body onresize="throttledFunc()">
+    Debounce normal: <input type="text" onkeypress="debouncedFunc(event)" />
+    Debounce immediate: <input type="text" onkeypress="debouncedFunc1(event)" />
+    Throttle: <input type="text" onkeypress="throttledFunc(event)" />
+    Lodash debounce : <input type="text" onkeypress="lodashDebounceFunc(event)" />
+  </body>
+
+  <script>
+    // In throttle delay is dependent on program logic directly & independent of user interaction
+    // Function will be called every 'delay' seconds irrespective of user action
+    function throttle(fn, delay) {
+      let isThrottling = false; //we'll call the function for the initial call so initially function is not throttling
+      return function () {
+        if (!isThrottling) {
+          fn();
+          isThrottling = true;
+          setTimeout(() => {
+            isThrottling = false;
+          }, delay);
+        }
+      };
+    }
+
+    // In debounce delay is dependent on user action. 
+    // Depending on user input frequency function maybe called immidietly or never
+    function debounce(fn, delay, immediate) {
+      let timeout;
+      return function () {
+        var callNow = immediate && !timeout;
+
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          timeout = null;
+          
+          if(!immediate) {
+            fn.apply(this, arguments)
+          }
+        }, delay)
+
+        if(callNow) fn.apply(this, arguments);
+      }
+    }
+
+    throttledFunc = throttle(someFunc, 2000);
+    debouncedFunc = debounce(someFunc, 500);
+    debouncedFunc1 = debounce(someFunc, 500, true);
+    lodashDebounceFunc = _.debounce(someFunc, 500) //trailing by default
+
+    function someFunc(e) {
+      console.log("calling function..");
+    }
+  </script>
+</html>

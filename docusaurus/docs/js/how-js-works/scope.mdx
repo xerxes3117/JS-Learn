@@ -1,0 +1,194 @@
+---
+sidebar_position: 1
+---
+
+import DocusaurusImageUrl from '@site/static/img/scope_chain.jpg';
+import notes1 from "@site/static/img/scope_notes1.jpg";
+
+# Scope and Scope Chain
+
+<br />
+
+Scope is the area of the program where the variable can be accessed. The scope of a variable is defined by its location within the code.
+
+
+:::info
+Scope is established at compile time but used at runtime.
+Which means scope of a variable is not determined by where the function is called, but by where the function is defined (i.e. where it is present lexically in the code).
+:::
+
+<div style={{ color: "red" }}>What exactly is meant by **creating a scope**?</div>
+<div style={{ color: "red" }}>How closure scope creation is different from other types of scopes</div>
+
+<br />
+### Lexical Environment
+
+<span style={{ color: "red" }}>(Improve below definition. explain when lexical environment is created here itself rather than in warning)</span>
+
+Lexical environment is the local memory of the function along with the reference to the lexical environment of its lexically parent function. Scope is internally stored in memory as part of the Lexical Environment.
+
+It consists of two components:
+
+1. **Environment Record**: It stores all the local variables and function declarations within the function.
+2. **Reference to the outer environment**: It is a reference to the outer lexical environment.
+
+| Concept | What It Is? |
+| ------- | ----------- |
+| Scope | The set of variables/functions accessible in a given part of the code (based on where the code is written). |
+| Lexical Environment | The **internal data structure** that JavaScript uses to **implement scope** at runtime. |
+<br />
+
+
+:::warning
+A lexical environment is created when a function is **defined**, not when it's **called** and it happens in compilation phase. During this phase only, variables are allocated memory (in environment record) and hoisting is done.
+
+When the function is called, its execution context is created and the previously created lexical environment is attached to this execution context.
+:::
+
+<div style={{ color: "red" }}>Add images from browser dev tools showing all these lexical environments for nested functions (see end of namaste js video in references below)</div>
+
+<br />
+### Scope Chain
+```javascript
+function outer() {
+  let x = 10;
+  function inner() {
+    console.log(x);
+  }
+  inner();
+}
+
+outer(); // 10
+```
+<div style={{ color: "red" }}>Draw and Import ipad images for scope chain</div>
+{/* <img src={DocusaurusImageUrl} alt="Scope" width="500" /> */}
+
+<br />
+### Types of Scope 
+<span style={{ color: "red" }}>Some of below maybe be same or invalid. Need to verify and correct them.</span>
+1. **Global Scope**
+6. **Module Scope**
+3. **Block Scope** (https://youtu.be/lW_erSjyMeM?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
+4. **Function Scope**
+8. **Closure Scope**
+
+:::info
+Script scope 
+- What exactly it is and how it separates var and let/const variables: https://stackoverflow.com/a/70786086/8425685
+:::
+
+<div style={{ color: "red" }}>When each of above scope is created, destroyed & what it stores</div>
+
+<br />
+1. **Local Scope** (common name for block and function scope)
+2. **Lexical Scope** (not an actual scope but a lookup rule implemented using scope chain i.e. reference to parent scope in lexical environment)
+
+<br />
+
+### Global lexical environment vs Global scope
+
+Both global lexical environment and global scope are created when the script is loaded in the browser. **They both exist at the same time and are used to store global variables and functions in different ways.**
+
+<br />
+
+**Global Scope**
+
+In browsers, **Global scope** is usually represented by the **window** object which is used to store **variables/functions which are accessible globally anywhere**. Depending upon the type of script tag, the global scope can store variables/functions in different ways. 
+
+In a regular script, all **var** variables and functions are attached to the window object
+
+
+```javascript
+var a = 10;
+let b = 20;
+const c = 30;
+function foo() {
+	console.log("foo");
+}
+console.log(window.a); // 10
+console.log(window.foo); // function foo() { console.log("foo"); }
+console.log(window.b); // undefined
+console.log(window.c); // undefined
+```
+
+However, module scripts **script type="module"** run in a separate module scope and do not attach variables to the window object. This is because module scripts are designed to be more encapsulated and avoid polluting the global scope.
+
+```javascript
+// script type="module"
+var a = 10;
+let b = 20;
+const c = 30;
+function foo() {
+	console.log("foo");
+}
+
+console.log(window.a); // undefined
+console.log(window.b); // undefined
+console.log(window.c); // undefined
+console.log(window.foo); // undefined
+```
+
+In both cases, **let** and **const** variables are not attached to the **window** object. This is because let and const variables are block-scoped and do not have a global scope.
+
+<br />
+**Global Lexical Environment**
+
+Global Lexical Environment (GLE) is an internal JavaScript structure that stores global variables but separates **var** vs. **let** and **const**.
+
+It stores var variables in the **declarative environment record** and let/const variables in the **object environment record** both of which are part of enviroment record defined above
+
+```javascript
+var a = 10; //stored in declarative environment record
+let b = 20; //stored in object environment record
+const c = 30; //stored in object environment record
+function foo() { 
+	console.log("foo");
+}
+console.log(window.a); // 10
+console.log(window.b); // undefined
+console.log(window.c); // undefined
+console.log(window.foo); // function foo() { console.log("foo"); }
+```
+
+**GLE** is the primary Storage for all top level variables and functions, and is used when any global variable is accessed. When the JavaScript engine processes **var** declarations and **function** declarations at the top level, it does two things:
+- It creates a binding in the GLE.
+- It also creates a property with the same name on the global object (window)
+
+**let and const bypass the window Object**: Variables declared with **let** and **const** at the top level are stored in the **GLE** but are not automatically created as properties on the window object. They are still part of the global scope because the GLE is the first (and outermost) lexical environment in the scope chain when code is executing globally. You access them directly by their name.
+
+**Scope Resolution and the GLE**: When the JavaScript engine tries to resolve a variable in the global scope, it starts by looking in the current lexical environment, which is the GLE. If it finds the variable there (regardless of whether it was declared with var, let, or const), it uses that binding. For var globals, finding it in the GLE also implies its existence as a window property.
+
+<br />
+
+| Feature | Global Scope | Global Lexical Environment (GLE) |
+| ----- | ----------------- | ----------------------------------- |
+| What is it? | Everything accessible globally | Internal structure managing global variables |
+| Stores var? | ✅ Yes (in window) | ✅ Yes (in Object Environment Record) |
+| Stores let and const? | ✅ Yes | ✅ Yes (in Declarative Environment Record) |
+| Stored in window object? | ✅ Yes (var) | ❌ No (let & const are not in window) |
+| Has scope chain reference? | ❌ No | ✅ Yes (contains Outer Lexical Environment reference) |
+
+<br />
+
+**Section Doubts**
+- <div style={{ color: "red" }}>Add declarative environment record and object environment record definitions in above section about Lexical Environment</div>
+- <div style={{ color: "red" }}>What is usage of both global scope and global lexical environment?</div>
+
+<br />
+### Doubts
+- <span style={{ color: "red" }}>Lexical environment vs Variable environment. Is variable environment part of scope?</span>
+- <span style={{ color: "red" }}>Where is lexical environment stored?</span>
+- <span style={{ color: "red" }}>How variables are resolved using scope and lexical environment? explain with example</span>
+- <span style={{ color: "red" }}>What kind of data structures are used to store environment record and reference to the outer environment?</span>
+- <span style={{ color: "red" }}>Scope rules in arrow functions vs normal functions</span>
+
+<br />
+### References
+- <a href="https://www.youtube.com/watch?v=2pL28CcEijU" target="_blank">Namaste JS - Scope, Scope chain & Lexical Environment</a>
+- <a href="https://developer.mozilla.org/en-US/docs/Glossary/Scope" target="_blank">MDN - Scope</a>
+- <a href="https://javascript.info/closure#lexical-environment" target="_blank">Javascript.info - Lexical Environment</a>
+- <a href="https://medium.com/@mohdtalib.dev/lexical-environment-in-javascript-a2112b78a3cb" target="_blank">Medium Article</a>
+
+<br />
+### Notes
+<img src={notes1} alt="Scope" width="700" />

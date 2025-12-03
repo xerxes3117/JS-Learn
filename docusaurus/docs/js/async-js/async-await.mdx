@@ -1,0 +1,105 @@
+---
+sidebar_position: 4
+---
+
+# Async/Await
+
+Async/Await is a syntactic sugar for Promises. It makes asynchronous code look more like synchronous code, making it easier to read and write.
+
+<br />
+
+# How async/await works
+
+Await blocks the execution of any code below it in the function (where it is used)
+```js
+const getData = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Hello, world!');
+  }, 3000);
+});
+
+async function myAsyncFunction() {
+  console.log('Before await'); // Prints immediately
+  const value = await getData();
+  console.log('After await'); // Prints after 3 seconds when the promise is resolved
+  console.log(value);
+}
+```
+
+:::info
+An async function always returns a Promise even if you don't return a Promise from it. 
+Whatever you return from the async function, it will be wrapped in a Promise. 
+```js
+//Example 1: Async function returning a string 
+async function myAsyncFunction() {
+  return 'Hello, world!';
+}
+
+myAsyncFunction().then((value) => {
+  console.log(value); // Still prints 'Hello, world!'
+});
+```
+If you don't return anything from the async function, it will return a Promise that resolves to undefined.
+```js
+//Example 2: Async function returning nothing
+async function myAsyncFunction() {}
+
+//The above is same as:
+function myAsyncFunction() {
+  return Promise.resolve(undefined);
+}
+
+myAsyncFunction().then((value) => {
+  console.log(value); // Prints undefined
+});
+```
+Even if you have applied `await` inside the async function, it will still return a Promise. The value of the returned Promise will depend on the value returned by the function.
+```js
+async function myAsyncFunction() {
+  const val = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+  console.log('After await');
+}
+
+myAsyncFunction().then((value) => {
+  console.log(value); // Prints undefined
+});
+```
+:::
+
+<br />
+### Error handling 
+**Using try...catch**
+```js
+async function myAsyncFunction() {
+  try {
+    const value = await getData();
+    console.log(value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+```
+
+**Using .catch()**
+```js
+//Since async functions return a Promise, we can use also use `.catch()` to handle errors.
+async function myAsyncFunction() {
+  const value = await getData();
+  console.log(value);
+}
+
+myAsyncFunction().catch((error) => {
+  console.log(error);
+});
+```
+
+<br />
+
+### Doubts
+- <span style={{ color: "red" }}>Async await polyfill</span>
+
+<br />
+### References
+
+<br />
+### Notes

@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+---
+
+# Execution Context
+
+<br/>
+
+### Definition
+- <div style={{ color: 'red' }}>What exactly is execution context memory wise?? (Insert diagrams showing parts of execution context)</div>
+- <div style={{ color: 'red' }}>Execution context is part of which phase (build, compile, runtime)</div>
+
+<br/>
+When any javascript module is loaded or any function invocation is done an Execution context is created
+
+This consists of two phases:
+- Creation (Memory allocation)
+- Execution (Code)
+
+:::info
+The **Global Execution context** is created when the script is loaded (i.e. even before the code starts executing) whereas the function execution context is created when the function is invoked.
+:::
+
+<br/>
+### How Execution context works
+
+Check out the following code snippet:
+```js showLineNumbers
+var a = 10;
+function foo() {
+  var b = 20;
+  console.log(a + b);
+}
+foo();
+```
+
+<span style={{ color: 'red' }}>Insert diagrams explaining below steps (including diagrams from dev tools)</span>
+1. `Global execution context` is created and pushed to the call stack. This will be used to store all the globally defined variables and functions. This consits of 2 parts, memory and code.
+
+2. **Memory allocation** (global context): (<span style={{ color: 'red' }}>Explain hoisting here</span>)
+	- Memory is allocated for var ****a**** with value ****undefined**** (line 1)
+	- Memory is allocated for function ****foo**** with value as whole function definition (line 2)
+
+```js {1-2} showLineNumbers
+var a = 10; // Memory allocated for a
+function foo() { // Memory allocated for foo
+  var b = 20;
+  console.log(a + b);
+}
+foo();
+```
+
+:::info
+Note that code execution has not started yet.
+:::
+
+3. **Code Execution** (global context)
+	- Value of **a** is assigned as **10** (line 1)
+	- Function **foo** is invoked (line 6) which creates a new execution context for the function foo and pushes it to the call stack
+
+4. **Memory allocation** (foo context):
+	- Memory is allocated for var ****b**** with value ****undefined**** (line 3)
+
+```js {3} showLineNumbers
+var a = 10;
+function foo() {
+	var b = 20; // Memory allocated for b
+	console.log(a + b);
+}
+foo();
+```
+
+5. **Code Execution** (foo context)
+	- Value of **b** is assigned as **20** (line 3)
+	- **console.log(a + b)** is executed and the output is **30** (line 4)
+
+6. Execution context of **foo** is popped out of the call stack
+
+7. **Global** execution context is popped out of the call stack
+
+
+### Doubts
+
+- <span style={{ color: "red" }}>What all happens when a function is invoked in JS</span>
+- <span style={{ color: "red" }}>What exactly is variable environment in execution context?</span>
+- <span style={{ color: "red" }}>Each Execution context (whether global or function) has its own local memory space which is independent of memory spaces of other execution contexts. What is this local memory space exactly? How is this related to scope? Check where are these memory space in dev tools.</span>
+- <span style={{ color: "red" }}>Is Execution content created only for module load and function invocation? Are there any other scenarios?</span>
+- <span style={{ color: "red" }}>A window object is created along with global execution context. What is the use of this object? When exactly is this object created for a web page load and when is it destroyed? Is there any callback to access creation and destruction of this object?</span>
+- <span style={{ color: "red" }}>How is window object provided to any script running on page? If 2 scripts are running on the same page, do they share the same window object?</span>
+

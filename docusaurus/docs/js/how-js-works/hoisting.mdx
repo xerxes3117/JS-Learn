@@ -1,0 +1,76 @@
+---
+sidebar_position: 1
+---
+
+# Hoisting
+
+<br />
+
+Hoisting is part of the creation (memory allocation) phase of the execution context.
+
+During memory allocation phase, hositing is responsible for **allocating memory** for variables and functions and setting their initial values.
+
+<br />
+
+### How hoisting works
+
+During memory allocation phase any variable (including functions) declared with `var` is allocated memory with value `undefined` and functions declared with `function` keyword are allocated memory with the whole function definition.
+
+```js showLineNumbers
+console.log(a); // a is accessible here but its value is undefined
+
+foo(); // foo is accessible here because of hoisting
+
+var a = 10;
+
+function foo() {
+  var b = 20;
+  console.log(a + b);
+}
+```
+
+<br />
+:::warning 
+Function expressions are not hoisted
+```js showLineNumbers
+bar(); // ReferenceError: Cannot access 'bar' before initialization
+
+var bar = function () {
+  console.log("bar");
+};
+```
+:::
+
+<br />
+
+### undefined vs not defined (ReferenceError)
+
+A variable's value is `undefined` when it has been declared but not assigned any value yet.
+
+`not defined` means that the variable has not been declared. In this case you will get a `ReferenceError`.
+
+```js showLineNumbers
+console.log(a); // undefined because a is hoisted with value undefined
+console.log(b); // ReferenceError: b is not defined
+
+var a = 10;
+```
+
+| Variable | Present in memory? | Value       |
+| -------- | ------------------ | ----------- |
+| **a**    | Yes                | `undefined` |
+| **b**    | No                 | -           |
+
+<br />
+
+### Hoisting with let and const
+
+```js showLineNumbers
+console.log(a); // undefined because a is hoisted with value undefined
+console.log(b); // ReferenceError: Cannot access 'b' before initialization
+console.log(c); // ReferenceError: Cannot access 'c' before initialization
+
+let a = 10;
+var b = 20;
+const c = 30;
+```

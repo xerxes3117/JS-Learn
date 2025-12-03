@@ -1,0 +1,107 @@
+---
+sidebar_position: 4
+---
+
+import ScopesAndEnvNotes1 from "@site/static/img/scopes_and_outerEnv.jpg";
+import ClosureNotes1 from "@site/static/img/closure_notes1.jpg";
+
+# Closure
+
+<br />
+
+A function along with its lexical scope (i.e. the variables from the outer function) is called a closure.
+
+```javascript
+function outer() {
+  let outerVar = "I am from outer";
+
+  function inner() {
+    console.log(outerVar); // Accessing outer variable creates a closure scope
+  }
+
+  return inner;
+}
+const innerFunc = outer();
+innerFunc();
+```
+
+Unlike other scopes, **Closure scope** do not create a special or new type of Lexical Environment, instead:
+
+- The inner function gets its own Lexical Environment when it is executed.
+- But it retains a reference to the Lexical Environment of the outer function, even after the outer function has returned.
+
+So the closure scope refers to a preserved outer Lexical Environment — not a separate "closure Lexical Environment"
+
+:::warning
+Closures store the **reference** to the outer Lexical Environment, not the **values** of the variables. So if the outer variable changes, the inner function will see the updated value.
+
+```javascript
+for (var i = 0; i < 3; i++) {
+  setTimeout(function () {
+    console.log(i); // 3, 3, 3
+  }, 1000);
+}
+```
+
+In the above example, the `setTimeout` function creates a closure that retains a reference to the outer Lexical Environment. By the time the timeout executes, the loop has completed and `i` is 3.
+
+To fix this, we can use an IIFE to create a new scope for each iteration:
+
+```javascript
+for (var i = 0; i < 3; i++) {
+  (function (i) {
+    setTimeout(function () {
+      console.log(i); // 0, 1, 2
+    }, 1000);
+  })(i);
+}
+```
+
+:::
+
+<br />
+### How Closures are implemented
+
+Javascript engines use a special internal property called `[[Scopes]]` to keep track of the outer Lexical Environment.
+
+<img src={ScopesAndEnvNotes1} alt="Scopes and OuterEnv" height={600} />
+
+<br />
+### Uses of closure:
+
+- Data hiding
+- Module design pattern
+- Currying
+- Functions like Once
+- Memoization
+- Maintaining State in async world
+- setTimeouts
+- iterators
+
+### Disadvantages of closure:
+- Memory leaks
+- Event listeners Garbage collection
+- Performance issues
+- Debugging issues
+- Complexity
+- Unintentional variable retention
+- Garbage collection issues
+- Overhead of maintaining scope chain
+- Unintentional retention of outer variables
+
+<br />
+### Doubts/To cover 
+- How IIFE creates a new closure scope?
+- Relation between `[[Scopes]]`/`[[Environment]]` & `[[OuterEnv]]` of lexical environment 
+- How closure is implemented using `[[Scopes]]`/`[[Environment]]`. Give both examples of what is saved in `[[Scopes]]` when there's a outer variable access vs when there's no outer variable access. 
+- Compile time vs runtime what happens for `[[Scopes]]`/`[[Environment]]`/`[[OuterEnv]]`. Inner and outer example with JIT compilation. 
+- Why `[[Scopes]]` has all the outer scopes present? Shouldn't just outer scope be enough? Also does it only contain outer scope which are closures? Verify this.
+- What is the significance of order/index of elements in `[[Scopes]]`? Which scope is present at first and last and why?
+- Where in memory is closure stored? How it affects garbage collection and slows down the performance?
+
+<br />
+### References
+
+<br />
+### Notes
+<img src={ClosureNotes1} alt="Closure Notes" height={600} />

@@ -1,0 +1,188 @@
+---
+sidebar_position: 1
+---
+
+# Promise
+
+Promise is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value.
+
+<br />
+### Promise creation
+To create a promise, we need to pass a callback function to the Promise constructor. This callback function takes two arguments: resolve and reject.
+```js
+const promiseResolve = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Hello, world!');
+  }, 1000);
+});
+
+promiseResolve.then((value) => {
+  console.log(value); // Prints 'Hello, world!' after 1 second
+});
+
+const promiseReject = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject('Error');
+  }, 1000);
+});
+
+promiseReject.catch((error) => {
+  console.log(error); // Prints 'Error' after 1 second
+});
+```
+:::info
+reject doesn’t have to be caught only in .catch() — you can also handle it in the second argument of .then()
+```js
+Promise.reject("Error happened")
+  .then(
+    value => console.log("Resolved:", value),     // success handler
+    reason => console.log("Rejected:", reason)    // error handler
+  );
+	```
+.catch() is just syntactic sugar for .then(null, onRejected):
+```js
+Promise.reject("Oops").catch(console.log);
+
+// is equivalent to:
+Promise.reject("Oops").then(null, console.log);
+```
+:::
+If you don’t handle the rejection in either .then() or .catch(), JavaScript will throw an unhandled promise rejection warning
+
+<br />
+### Promise execution
+Promise execution starts as soon as it is created and does not wait for the .then() attachment or await keyword. 
+Even if the .then() is attached after the promise is resolved, it will provide the resolved value (immediately in this case).
+```js
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Hello, world!');
+  }, 1000);
+});
+
+setTimeout(() => {
+  promise.then((value) => {
+    console.log(value); // Prints 'Hello, world!' after 2 seconds
+  });
+}, 2000);
+```
+
+If we want lazy execution, we need to wrap the promise in a function and call it.
+```js
+function getDataLazy() {
+  return new Promise(resolve => {
+    setTimeout(() => resolve("Hello"), 3000);
+  });
+}
+```
+
+<br />
+### Promise chaining
+
+
+<br />
+### How promise works behind the scenes (Microtasks queue)
+
+<br />
+### Promise API
+
+#### Promise.all
+This waits for all promises to resolve and returns an array of their results. 
+If any of the promises reject, it will reject with the first rejection reason. Any remaining promises are ignored.
+
+#### Promise.allSettled
+This waits for all promises to settle (resolve or reject) and returns an array of their results.
+:::warning
+Note that unlike `Promise.all`, `Promise.allSettled` doesn't directly return the values of the promises, but rather an object with the status of the promise and the value or reason.
+:::
+
+#### Promise.race
+This waits for the first promise to settle (resolve or reject) and returns its result.
+
+#### Promise.any
+This waits for the first promise to resolve and returns its result. If all promises reject, it will reject with an AggregateError.
+:::info
+Promise.any will wait for the first successful promise even if some promises reject before it.
+:::
+
+**Code examples**:
+```js
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(reject, 100, 'promise1 error'); // Rejects after 100ms
+});
+const promise2 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 200, 'promise2 success'); // Resolves after 200ms
+});
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 300, 'promise3 success'); // Resolves after 300ms
+});
+const promise4 = new Promise((resolve, reject) => {
+  setTimeout(reject, 200, 'promise4 error'); // Rejects after 200ms
+});
+
+/*
+ * Promise.all
+*/
+Promise.all([promise2, promise3]).then((values) => {
+  console.log(values); // After 200ms, prints ['promise2 success', 'promise3 success']
+})
+
+Promise.all([promise1, promise2, promise3, promise4]).then((values) => {
+  console.log(values); // Does not run
+}).catch((error) => {
+  console.log(error); // After 100ms, prints 'promise1 error'
+});
+
+/*
+ * Promise.allSettled
+*/
+Promise.allSettled([promise1, promise2, promise3, promise4]).then((values) => {
+  console.log(values); // After 300ms, prints [{status: 'rejected', reason: 'promise1 error'}, {status: 'fulfilled', value: 'promise2 success'}, {status: 'fulfilled', value: 'promise3 success'}, {status: 'rejected', reason: 'promise4 error'}]
+});
+
+/*
+ * Promise.race
+*/
+Promise.race([promise1, promise2, promise3, promise4]).then((value) => {
+  console.log(value); // After 100ms, prints 'promise1 error'
+});
+
+/*
+ * Promise.any
+*/
+Promise.any([promise1, promise2, promise3, promise4]).then((value) => {
+  console.log(value); // After 200ms, prints 'promise2 success'
+});
+
+Promise.any([promise1, promise4]).then((value) => {
+  console.log(value); // Does not run
+}).catch((error) => {
+  console.log(error); // After 200ms, prints AggregateError: All promises were rejected
+  console.log(error.errors); // After 200ms, prints ['promise1 error', 'promise4 error']
+});
+```
+
+**One-Line Memory Hooks**:
+
+| API | Think… | Mnemonic |
+| --- | --- | --- |
+| Promise.all | "All must pass" | ☠️ One fails = all fail |
+| Promise.any | "Any one good enough" | 🎯 First success wins |
+| Promise.race | "Whoever finishes first wins" | 🏁 First to resolve/reject |
+| Promise.allSettled | "Let’s just see what happened to everyone" | 📋 Results of all, no matter what |
+
+<br />
+### Doubts
+- <span style={{ color: "red" }}>settled vs fulfilled meaning in promises</span>
+- <span style={{ color: "red" }}>What are real world use cases for different Promise APIs in UI</span>
+- <span style={{ color: "red" }}>Is .then() & .catch() same as try...catch block?</span>
+
+
+<br />
+### References
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+- https://javascript.info/promise-basics
+- https://youtu.be/ap-6PPAuK1Y?list=PLlasXeu85E9eWOpw9jxHOQyGMRiBZ60aX
+
+<br />
+### Notes

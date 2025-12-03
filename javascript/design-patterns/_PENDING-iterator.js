@@ -1,0 +1,1 @@
+//https://www.dofactory.com/javascript/design-patterns/iterator
