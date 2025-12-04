@@ -12,7 +12,14 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "pm2:start": "npx pm2 start ecosystem.config.js",
+    "pm2:stop": "npx pm2 stop docusaurus",
+    "pm2:restart": "npx pm2 restart docusaurus",
+    "pm2:delete": "npx pm2 delete docusaurus",
+    "pm2:logs": "npx pm2 logs docusaurus",
+    "pm2:monit": "npx pm2 monit",
+    "pm2:status": "npx pm2 status"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.3",

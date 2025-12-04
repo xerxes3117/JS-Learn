@@ -101,6 +101,28 @@ const config: Config = {
         {to: '/blog', label: 'Interview Experiences', position: 'left'},
       ],
     },
+    algolia: {
+      // The application ID provided by Algolia
+      appId: 'TS2RUOYNW4',
+      
+      // Public API key: it is safe to commit it
+      apiKey: '26425012f7e5e84a9b34ec8f446ee017',
+      
+      indexName: 'js-learning-docs',
+      
+      // Optional: see docsearch documentation
+      contextualSearch: true,
+      
+      // Optional: Algolia search parameters - make search more precise
+      searchParameters: {
+        typoTolerance: false, // Disable typo tolerance for exact matches
+        removeWordsIfNoResults: 'none', // Don't remove words if no results
+        exactOnSingleWordQuery: 'word', // Exact match for single word queries
+      },
+      
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+    },
     prism: {
       theme: prismThemes.dracula,
       darkTheme: prismThemes.dracula,
