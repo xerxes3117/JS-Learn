@@ -139,6 +139,7 @@ const config: Config = {
 
 	plugins: [
 		'./src/plugins/algolia-verification.ts',
+		'./src/plugins/webpack-config.ts',
 	],
 
 	themes: [

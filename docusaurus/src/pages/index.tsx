@@ -1,9 +1,9 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import { CategoryCardGrid } from '@ui-components';
 
 import styles from './index.module.css';
 
@@ -11,30 +11,19 @@ const sections = [
   {
     title: 'JavaScript',
     description: 'Learn JavaScript fundamentals, advanced concepts, and how JavaScript works under the hood.',
-    to: '/docs/category/how-javascript-works',
+    href: '/docs/js/introduction',
   },
   {
     title: 'React Native',
     description: 'Master React Native development for building cross-platform mobile applications.',
-    to: '/docs/category/react-native',
+    href: '/docs/react-native/introduction',
   },
   {
     title: 'React',
     description: 'Explore React concepts, hooks, patterns, and best practices for building modern web applications.',
-    to: '/docs/category/react',
+    href: '/docs/react/introduction',
   },
 ];
-
-function SectionCard({title, description, to}: {title: string; description: string; to: string}) {
-  return (
-    <div className={clsx('col col--4')}>
-      <Link to={to} className={styles.sectionCard}>
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </Link>
-    </div>
-  );
-}
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -57,15 +46,9 @@ export default function Home(): ReactNode {
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>
-        <section className={styles.sections}>
-          <div className="container">
-            <div className="row">
-              {sections.map((section) => (
-                <SectionCard key={section.title} {...section} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <div className="container margin-top--lg">
+          <CategoryCardGrid cards={sections} />
+        </div>
       </main>
     </Layout>
   );

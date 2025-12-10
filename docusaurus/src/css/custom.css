@@ -28,3 +28,54 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Card styling to match Docusaurus generated-index pages */
+section.row.list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(var(--ifm-spacing-horizontal) * -1);
+  margin-right: calc(var(--ifm-spacing-horizontal) * -1);
+}
+
+section.row.list article {
+  padding-left: var(--ifm-spacing-horizontal);
+  padding-right: var(--ifm-spacing-horizontal);
+}
+
+/* Match exact styles from @docusaurus/theme-classic/src/theme/DocCard/styles.module.css */
+section.row.list .cardContainer {
+  --ifm-link-color: var(--ifm-color-emphasis-800);
+  --ifm-link-hover-color: var(--ifm-color-emphasis-700);
+  --ifm-link-hover-decoration: none;
+
+  box-shadow: 0 1.5px 3px 0 rgb(0 0 0 / 15%);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: all var(--ifm-transition-fast) ease;
+  transition-property: border, box-shadow;
+  color: inherit;
+  text-decoration: none;
+}
+
+section.row.list .cardContainer:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
+  text-decoration: none;
+  color: inherit;
+}
+
+section.row.list .cardContainer *:last-child {
+  margin-bottom: 0;
+}
+
+section.row.list .cardTitle {
+  font-size: 1.2rem;
+  font-weight: var(--ifm-heading-font-weight);
+  margin-bottom: 0.5rem;
+  color: var(--ifm-heading-color);
+}
+
+section.row.list .cardDescription {
+  font-size: 0.8rem;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 0;
+}

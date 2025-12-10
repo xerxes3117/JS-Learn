@@ -46,5 +46,17 @@
   "sidebar.javascriptSidebar.category.Miscellaneous Topics": {
     "message": "Miscellaneous Topics",
     "description": "The label for category Miscellaneous Topics in sidebar javascriptSidebar"
+  },
+  "sidebar.reactNativeSidebar.category.Fundamentals": {
+    "message": "Fundamentals",
+    "description": "The label for category Fundamentals in sidebar reactNativeSidebar"
+  },
+  "sidebar.reactNativeSidebar.category.Core Concepts": {
+    "message": "Core Concepts",
+    "description": "The label for category Core Concepts in sidebar reactNativeSidebar"
+  },
+  "sidebar.reactNativeSidebar.category.Advanced Topics": {
+    "message": "Advanced Topics",
+    "description": "The label for category Advanced Topics in sidebar reactNativeSidebar"
   }
 }
