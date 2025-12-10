@@ -30,5 +30,13 @@
   "item.label.JavaScript Visualizer": {
     "message": "JavaScript Visualizer",
     "description": "Navbar item with label JavaScript Visualizer"
+  },
+  "item.label.React Native": {
+    "message": "React Native",
+    "description": "Navbar item with label React Native"
+  },
+  "item.label.React": {
+    "message": "React",
+    "description": "Navbar item with label React"
   }
 }

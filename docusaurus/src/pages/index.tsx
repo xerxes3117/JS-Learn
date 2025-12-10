@@ -3,10 +3,38 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
+
+const sections = [
+  {
+    title: 'JavaScript',
+    description: 'Learn JavaScript fundamentals, advanced concepts, and how JavaScript works under the hood.',
+    to: '/docs/category/how-javascript-works',
+  },
+  {
+    title: 'React Native',
+    description: 'Master React Native development for building cross-platform mobile applications.',
+    to: '/docs/category/react-native',
+  },
+  {
+    title: 'React',
+    description: 'Explore React concepts, hooks, patterns, and best practices for building modern web applications.',
+    to: '/docs/category/react',
+  },
+];
+
+function SectionCard({title, description, to}: {title: string; description: string; to: string}) {
+  return (
+    <div className={clsx('col col--4')}>
+      <Link to={to} className={styles.sectionCard}>
+        <Heading as="h3">{title}</Heading>
+        <p>{description}</p>
+      </Link>
+    </div>
+  );
+}
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -16,14 +44,6 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/tutorials/tutorial-basics/create-a-document">
-            Get Started - 5min ⏱️
-          </Link>
-        </div>
       </div>
     </header>
   );
@@ -37,7 +57,15 @@ export default function Home(): ReactNode {
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+        <section className={styles.sections}>
+          <div className="container">
+            <div className="row">
+              {sections.map((section) => (
+                <SectionCard key={section.title} {...section} />
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </Layout>
   );

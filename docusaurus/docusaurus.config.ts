@@ -98,6 +98,18 @@ const config: Config = {
 					position: 'left',
 					label: 'Javascript',
 				},
+				{
+					type: 'docSidebar',
+					sidebarId: 'reactNativeSidebar',
+					position: 'left',
+					label: 'React Native',
+				},
+				{
+					type: 'docSidebar',
+					sidebarId: 'reactSidebar',
+					position: 'left',
+					label: 'React',
+				},
         {to: '/blog', label: 'Interview Experiences', position: 'left'},
       ],
     },
