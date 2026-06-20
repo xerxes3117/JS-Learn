@@ -1,0 +1,23 @@
+diff --git a/node_modules/react-native-gesture-handler/android/build.gradle b/node_modules/react-native-gesture-handler/android/build.gradle
+--- a/node_modules/react-native-gesture-handler/android/build.gradle
++++ b/node_modules/react-native-gesture-handler/android/build.gradle
+@@ -1,19 +1,4 @@
+ import groovy.json.JsonSlurper
+ import com.android.build.gradle.tasks.ExternalNativeBuildJsonTask
+ 
+-buildscript {
+-    def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['RNGH_kotlinVersion']
+-
+-    repositories {
+-        mavenCentral()
+-        google()
+-    }
+-
+-    dependencies {
+-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+-        classpath("com.android.tools.build:gradle:7.2.1")
+-        classpath("com.diffplug.spotless:spotless-plugin-gradle:6.7.2")
+-    }
+-}
+-
+ def isNewArchitectureEnabled() {
